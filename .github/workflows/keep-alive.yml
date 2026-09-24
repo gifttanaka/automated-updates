@@ -1,0 +1,24 @@
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    # Runs daily at 07:23 UTC
+    - cron: '23 7 * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Random delay (0-15 min)
+        run: sleep $((RANDOM % 900))
+
+      - name: Ping Supabase database
+        run: |
+          curl -X POST 'https://beahbtwawgvluxporjmj.supabase.co/rest/v1/keep_alive' \
+            -H "apikey: sb_publishable_cLjwvYSQlc3oh3k1sItYIw_Gzvl8ip6" \
+            -H "Authorization: Bearer sb_publishable_cLjwvYSQlc3oh3k1sItYIw_Gzvl8ip6" \
+            -H "Content-Type: application/json" \
+            -H "Prefer: return=minimal" \
+            -d '{}' \
+            --fail
